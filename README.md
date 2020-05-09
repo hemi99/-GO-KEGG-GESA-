@@ -6,3 +6,13 @@
 3.富集分析结果：富集分析每个部分得到的结果存放于xls文件中
 ##### 富集分析意义
 4.意义：富集到的terms有助于后续的研究分析，可以通过表型来验证基因富集到的terms的准确性
+###### 文件说明
+>>all_enrich.xls文件：存放的是取函数enrichGO其参数为ont="all"时的富集结果
+
+>>BP_enrich.xls文件：存放的是取函数enrichGO其参数为ont="BP"时的富集结果
+
+>>MF_enrich.xls文件：存放的是取函数enrichGO其参数为ont=""时的富集结果
+
+>>CC_enrich.xls文件：存放的是取函数enrichGO其参数为ont="MF"时的富集结果
+
+>>KEGG_enrich.xls文件：存放的是函数enrichKEGG做KEGG时的富集结果
