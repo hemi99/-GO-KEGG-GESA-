@@ -1,6 +1,6 @@
-#¡¾GO¸»¼¯·ÖÎö¡¿
-#¡¾KEGG¸»¼¯·ÖÎö¡¿
-# 1.ÏÂÔØ/µ¼Èë°ü²¢ÉèÖÃµ±Ç°¹¤×÷Â·¾¶
+#ã€GOå¯Œé›†åˆ†æã€‘
+#ã€KEGGå¯Œé›†åˆ†æã€‘
+# 1.ä¸‹è½½/å¯¼å…¥åŒ…å¹¶è®¾ç½®å½“å‰å·¥ä½œè·¯å¾„
 options(BioC_mirror="http://mirrors.ustc.edu.cn/bioc/")
 BiocManager::install(c("DOSE","topGO","clusterProfiler","pathview"))
 BiocManager::install("GOplot")
@@ -15,83 +15,83 @@ library(GOplot)
 library(goProfiles)
 library(ggplot2)
 library(KEGG.db)
-setwd('D:/´óÈıÏÂÑ§Ï°/×ÔÈ»ÓïÑÔ´¦ÀíÓëÖªÊ¶·¢ÏÖ/Õ¹Ê¾/GO¸»¼¯·ÖÎöµÄ½á¹ûÍ¼Õ¹Ê¾')
+setwd('D:/')
 
-# 2.ÈËÀà»ùÒòÊı¾İ¿â±àºÅµÄÀàĞÍ¼°µ¼ÈëTP53µÈÒ»Ààº¬ÓĞµÄ856¸ö»ùÒòµÄ»ùÒò¼¯Êı¾İ
+# 2.äººç±»åŸºå› æ•°æ®åº“ç¼–å·çš„ç±»å‹åŠå¯¼å…¥TP53ç­‰ä¸€ç±»å«æœ‰çš„856ä¸ªåŸºå› çš„åŸºå› é›†æ•°æ®
 keytypes(org.Hs.eg.db)
 MyGeneSet_table<-read.table(file.choose())
 MyGeneSet<-as.character(MyGeneSet_table$V1)
 typeof(MyGeneSet)
 
-# 3.±àºÅ×ª»»SYMBOL->ENTREZID
+# 3.ç¼–å·è½¬æ¢SYMBOL->ENTREZID
 MyGeneIDSet=bitr(MyGeneSet,fromType = "SYMBOL",toType = "ENTREZID",OrgDb = "org.Hs.eg.db")
 MyGeneIDSet
 
-# 4.GO¸»¼¯·ÖÎö
+# 4.GOå¯Œé›†åˆ†æ
 data(geneList,package = "DOSE")  
 names(geneList)
-display_number = c(15, 10, 15)    #½«BP¡¢MF¡¢CC»æÖÆÓÚÒ»¸öÍ¼ÖĞÊ±Ñ¡ÔñµÄÊõÓï¸öÊı
-#£¨1£©²ÎÊıÉèÖÃÎªALL£¬¶ÔMF£¬CC£¬BP½øĞĞ¸»¼¯·ÖÎö
+display_number = c(15, 10, 15)    #å°†BPã€MFã€CCç»˜åˆ¶äºä¸€ä¸ªå›¾ä¸­æ—¶é€‰æ‹©çš„æœ¯è¯­ä¸ªæ•°
+#ï¼ˆ1ï¼‰å‚æ•°è®¾ç½®ä¸ºALLï¼Œå¯¹MFï¼ŒCCï¼ŒBPè¿›è¡Œå¯Œé›†åˆ†æ
 ego_all<-enrichGO(gene=MyGeneIDSet$ENTREZID,
                   universe = names(geneList),
                   OrgDb = org.Hs.eg.db,
-                  ont="ALL",     #¸Ã²ÎÊıÒ²¿ÉÒÔÎªALL/CC/BP/MF
-                  pAdjustMethod = "BH",    #¸Ã²ÎÊı»¹¿ÉÒÔÎªholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
+                  ont="ALL",     #è¯¥å‚æ•°ä¹Ÿå¯ä»¥ä¸ºALL/CC/BP/MF
+                  pAdjustMethod = "BH",    #è¯¥å‚æ•°è¿˜å¯ä»¥ä¸ºholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
                   pvalueCutoff = 0.5,
                   qvalueCutoff = 1,
                   readable = TRUE)
-#£¨2£©²ÎÊıÉèÖÃÎªMF£¬¶Ô·Ö×Ó¹¦ÄÜ½øĞĞ¸»¼¯·ÖÎö
+#ï¼ˆ2ï¼‰å‚æ•°è®¾ç½®ä¸ºMFï¼Œå¯¹åˆ†å­åŠŸèƒ½è¿›è¡Œå¯Œé›†åˆ†æ
 ego_MF<-enrichGO(gene=MyGeneIDSet$ENTREZID,
                  universe = names(geneList),
                  OrgDb = org.Hs.eg.db,
-                 ont="MF",     #¸Ã²ÎÊıÒ²¿ÉÒÔÎªALL/CC/BP/MF
-                 pAdjustMethod = "BH",    #¸Ã²ÎÊı»¹¿ÉÒÔÎªholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
+                 ont="MF",     #è¯¥å‚æ•°ä¹Ÿå¯ä»¥ä¸ºALL/CC/BP/MF
+                 pAdjustMethod = "BH",    #è¯¥å‚æ•°è¿˜å¯ä»¥ä¸ºholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
                  pvalueCutoff = 0.5,
                  qvalueCutoff = 1,
                  readable = TRUE)
 ego_result_MF <- as.data.frame(ego_MF)[1:display_number[1], ]
-#£¨3£©²ÎÊıÉèÖÃÎªCC£¬¶ÔÏ¸°û×é·Ö½øĞĞ¸»¼¯·ÖÎö
+#ï¼ˆ3ï¼‰å‚æ•°è®¾ç½®ä¸ºCCï¼Œå¯¹ç»†èƒç»„åˆ†è¿›è¡Œå¯Œé›†åˆ†æ
 ego_CC<-enrichGO(gene=MyGeneIDSet$ENTREZID,
                  universe = names(geneList),
                  OrgDb = org.Hs.eg.db,
-                 ont="CC",     #¸Ã²ÎÊıÒ²¿ÉÒÔÎªALL/CC/BP/MF
-                 pAdjustMethod = "BH",    #¸Ã²ÎÊı»¹¿ÉÒÔÎªholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
+                 ont="CC",     #è¯¥å‚æ•°ä¹Ÿå¯ä»¥ä¸ºALL/CC/BP/MF
+                 pAdjustMethod = "BH",    #è¯¥å‚æ•°è¿˜å¯ä»¥ä¸ºholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
                  pvalueCutoff = 0.5,
                  qvalueCutoff = 1,
                  readable = TRUE)
 ego_result_CC <- as.data.frame(ego_CC)[1:display_number[2], ]
-#£¨4£©²ÎÊıÉèÖÃÎªBP£¬¶ÔÉúÎïÑ§¹ı³Ì½øĞĞ¸»¼¯·ÖÎö
+#ï¼ˆ4ï¼‰å‚æ•°è®¾ç½®ä¸ºBPï¼Œå¯¹ç”Ÿç‰©å­¦è¿‡ç¨‹è¿›è¡Œå¯Œé›†åˆ†æ
 ego_BP<-enrichGO(gene=MyGeneIDSet$ENTREZID,
                  universe = names(geneList),
                  OrgDb = org.Hs.eg.db,
-                 ont="BP",     #¸Ã²ÎÊıÒ²¿ÉÒÔÎªALL/CC/BP/MF
-                 pAdjustMethod = "BH",    #¸Ã²ÎÊı»¹¿ÉÒÔÎªholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
+                 ont="BP",     #è¯¥å‚æ•°ä¹Ÿå¯ä»¥ä¸ºALL/CC/BP/MF
+                 pAdjustMethod = "BH",    #è¯¥å‚æ•°è¿˜å¯ä»¥ä¸ºholm/hochberg/hommel/bonferroni/BH/BY/fdr/none
                  pvalueCutoff = 0.5,
                  qvalueCutoff = 1,
                  readable = TRUE)
 ego_result_BP <- na.omit(as.data.frame(ego_BP)[1:display_number[3], ])
-# ¸»¼¯½á¹ûµÄÎÄ¼şµÄÊä³ö
+# å¯Œé›†ç»“æœçš„æ–‡ä»¶çš„è¾“å‡º
 write.csv(as.data.frame(ego_all),"ALL-enrich.csv",row.names = FALSE)
 write.csv(as.data.frame(ego_MF),"MF-enrich.csv",row.names = FALSE)
 write.csv(as.data.frame(ego_BP),"BP-enrich.csv",row.names = FALSE)
 write.csv(as.data.frame(ego_CC),"CC-enrich.csv",row.names = FALSE)
 
-# 5.GO¸»¼¯·ÖÎö½á¹û¿ÉÊÓ»¯
-#£¨1£©»æÖÆÖù×´Í¼
+# 5.GOå¯Œé›†åˆ†æç»“æœå¯è§†åŒ–
+#ï¼ˆ1ï¼‰ç»˜åˆ¶æŸ±çŠ¶å›¾
 barplot(ego_all,showCategory=20,title="EnrichmentGO_all")
 barplot(ego_MF,showCategory=20,title="EnrichmentGO_MF")
 barplot(ego_BP,showCategory=20,title="EnrichmentGO_BP")
 barplot(ego_CC,showCategory=20,title="EnrichmentGO_CC")
-#£¨2£©ÓÃÓÚÖ»ÄÜ»æÖÆBP¡¢MF¡¢CCµÄÍøÂçÍ¼
+#ï¼ˆ2ï¼‰ç”¨äºåªèƒ½ç»˜åˆ¶BPã€MFã€CCçš„ç½‘ç»œå›¾
 goplot(ego_BP)
 goplot(ego_MF)
 goplot(ego_CC)
-#£¨3£©µãÍ¼
+#ï¼ˆ3ï¼‰ç‚¹å›¾
 dotplot(ego_all,showCategory=20,title="GO_ALL")
 dotplot(ego_MF,showCategory=20,title="GO_MF")
 dotplot(ego_BP,showCategory=20,title="GO_BP")
 dotplot(ego_CC,showCategory=20,title="GO_CC")
-#£¨4£©Ê¹ÓÃplotProfile°ü»æÖÆÖù×´Í¼
+#ï¼ˆ4ï¼‰ä½¿ç”¨plotProfileåŒ…ç»˜åˆ¶æŸ±çŠ¶å›¾
 plot_count<-function(input,title)
 {  
   GO_ALL<-as.data.frame(input@result)
@@ -103,7 +103,7 @@ plot_count(ego_all,"GO_ALL")
 plot_count(ego_MF,"GO_MF")
 plot_count(ego_BP,"GO_BP")
 plot_count(ego_CC,"GO_CC")
-#£¨5£©»æÖÆBP£¬MF£¬CCµÄ·Ö¿éÍ¼
+#ï¼ˆ5ï¼‰ç»˜åˆ¶BPï¼ŒMFï¼ŒCCçš„åˆ†å—å›¾
 go_enrich_df <- data.frame(ID=c(ego_result_BP$ID, ego_result_CC$ID, ego_result_MF$ID),
                            Description=c(ego_result_BP$Description, ego_result_CC$Description, ego_result_MF$Description),
                            GeneNumber=c(ego_result_BP$Count, ego_result_CC$Count, ego_result_MF$Count),
@@ -127,7 +127,7 @@ labels=(sapply(
   levels(go_enrich_df$Description)[as.numeric(go_enrich_df$Description)],
   shorten_names))
 names(labels) = rev(1:nrow(go_enrich_df))
-# »æÍ¼
+# ç»˜å›¾
 CPCOLS <- c("#8DA1CB", "#FD8D62", "#66C3A5")
 p <- ggplot(data=go_enrich_df, aes(x=number, y=GeneNumber, fill=type)) +
   geom_bar(stat="identity", width=0.8) + coord_flip() + 
@@ -137,16 +137,16 @@ p <- ggplot(data=go_enrich_df, aes(x=number, y=GeneNumber, fill=type)) +
   labs(title = "The Most Enriched GO Terms")
 p
 
-# 5.´úĞ»Í¨Â·µÄ¸»¼¯·ÖÎö
+# 5.ä»£è°¢é€šè·¯çš„å¯Œé›†åˆ†æ
 ego_kegg<-enrichKEGG(gene=MyGeneIDSet$ENTREZID,use_internal_data = TRUE)
 kegg<-as.data.frame(ego_kegg@result)
 write.csv(kegg,"KEGG-enrich.csv",row.names = FALSE)
-#£¨1£©µãÍ¼
+#ï¼ˆ1ï¼‰ç‚¹å›¾
 dotplot(ego_kegg,showCategory=20)
-#£¨2£©Öù×´Í¼
+#ï¼ˆ2ï¼‰æŸ±çŠ¶å›¾
 barplot(ego_kegg,showCategory=20,title="ego_KEGG")
-#£¨3£©²îÒì»ùÒò¹ØÁªÍ¼
+#ï¼ˆ3ï¼‰å·®å¼‚åŸºå› å…³è”å›¾
 emapplot(ego_kegg,showCategory = 30)
-#£¨4£©Í¨Â·Í¼
+#ï¼ˆ4ï¼‰é€šè·¯å›¾
 browseKEGG(ego_kegg,"hsa04934")
 
